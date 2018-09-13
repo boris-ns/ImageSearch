@@ -1,3 +1,11 @@
 .result-images {
     column-count: 3;
 }
+
+.favourite-images {
+    margin-top: 2em;
+}
+
+img:hover {
+    cursor: pointer;
+}

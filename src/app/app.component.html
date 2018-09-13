@@ -9,6 +9,14 @@
   <img *ngIf="isLoading" class="loading-image" src="../../res/loading.gif" />
   
   <div class="result-images">
-    <img *ngFor="let imageUrl of resultImages" src="{{ imageUrl }}" />
+    <img *ngFor="let imageUrl of resultImages" src="{{ imageUrl }}" (click)="onAddToFavourites(imageUrl)" />
+  </div>
+
+  <div *ngIf="favouriteImages.length > 0" class="favourite-images">
+    <h1>Favourite images</h1>
+
+    <div class="result-images">
+      <img *ngFor="let imageUrl of favouriteImages" src="{{ imageUrl }}" (click)="onRemoveFromFavourites(imageUrl)" />
+    </div>
   </div>
 </div>
