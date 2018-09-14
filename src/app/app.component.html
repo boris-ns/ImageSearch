@@ -9,8 +9,13 @@
   <img *ngIf="isLoading" class="loading-image" src="../../res/loading.gif" />
   
   <div class="result-images">
-    <img *ngFor="let imageUrl of resultImages" src="{{ imageUrl }}" (click)="onAddToFavourites(imageUrl)" />
+    <img *ngFor="let imageUrl of imagesOnPage" src="{{ imageUrl }}" (click)="onAddToFavourites(imageUrl)" />
   </div>
+
+  <form *ngIf="showButtons">
+    <button *ngIf="showBtnBack" (click)="onBtnBack()" type="button" class="button">Back</button>
+    <button *ngIf="showBtnNext" (click)="onBtnNext()" type="button" class="button">Next</button>
+  </form>
 
   <div *ngIf="favouriteImages.length > 0" class="favourite-images">
     <h1>Favourite images</h1>

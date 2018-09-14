@@ -18,7 +18,7 @@ export class DataService {
       .subscribe((response: any) => this.apiClientId = response.key);
   }
 
-  getPhotos(keyword) {
+  getPhotos(keyword: string) {
     return this.http.get(`${this.endpoint}/photos/search?client_id=${this.apiClientId}&query=${keyword}`);
   }
 }
