@@ -9,14 +9,17 @@ import { DataService } from './data.service';
 export class AppComponent {
   
   title = 'Image Search';
+  IMAGES_PER_PAGE = 2;
+  
   searchKeyword = '';
   resultImages = [];
   imagesOnPage = [];
   favouriteImages = [];
+  currentPage = 0;
+  
+  // Flags
   isLoading = false;
   showButtons = false;
-  IMAGES_PER_PAGE = 3;
-  currentPage = 0;
   showBtnNext = true;
   showBtnBack = false;
 
@@ -29,6 +32,7 @@ export class AppComponent {
     this.showBtnBack = false;
     this.isLoading = false;
     this.showButtons = false; 
+    this.imagesOnPage = [];
   }
 
   onSearch() {
@@ -54,8 +58,8 @@ export class AppComponent {
           ++numOfImages;
         });
         
-        (this.resultImages.length === 0) ? this.showButtons = false : this.showButtons = true;
-        this.showNextImages();
+        (numOfImages === 0) ? this.showButtons = false : this.showButtons = true;
+        this.showImagesFromCurrentPage();
       }
     );
   }
@@ -79,13 +83,13 @@ export class AppComponent {
     this.favouriteImages.splice(index, 1);
   }
 
-  showNextImages() {
+  showImagesFromCurrentPage() {
     this.imagesOnPage = this.resultImages[this.currentPage]; 
   }
 
   onBtnNext() {
     this.currentPage++;
-    this.showNextImages();
+    this.showImagesFromCurrentPage();
 
     // If we are not at first page, show back button
     if (this.currentPage === 1) {
@@ -99,6 +103,15 @@ export class AppComponent {
   }
 
   onBtnBack() {
-    // @TODO: implement this
+    this.currentPage--;
+    this.showImagesFromCurrentPage();
+
+    if (this.currentPage === 0) {
+      this.showBtnBack = false;
+    }
+
+    if (this.currentPage !== this.resultImages.length - 1) {
+      this.showBtnNext = true;
+    } 
   }
 }
