@@ -22,6 +22,7 @@ export class AppComponent {
   showButtons = false;
   showBtnNext = true;
   showBtnBack = false;
+  noResults = false;
 
   constructor(private dataService: DataService) {
   }
@@ -31,7 +32,8 @@ export class AppComponent {
     this.showBtnNext = true;
     this.showBtnBack = false;
     this.isLoading = false;
-    this.showButtons = false; 
+    this.showButtons = false;
+    this.noResults = false; 
     this.imagesOnPage = [];
   }
 
@@ -47,8 +49,8 @@ export class AppComponent {
     this.dataService.getPhotos(this.searchKeyword)
       .subscribe((response: any) => {
         this.isLoading = false;
+        
         response.forEach(element => {
-
           if (numOfImages % this.IMAGES_PER_PAGE === 0) {
             ++counter;
             this.resultImages[counter] = [];
@@ -58,7 +60,13 @@ export class AppComponent {
           ++numOfImages;
         });
         
-        (numOfImages === 0) ? this.showButtons = false : this.showButtons = true;
+        if (numOfImages === 0) {
+          this.showButtons = false;
+          this.noResults = true;
+        } else {
+          this.showButtons = true;
+        }
+
         this.showImagesFromCurrentPage();
       }
     );
